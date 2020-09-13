@@ -52,3 +52,4 @@ else:
     else:
         red_msge[par]='0'    
     print('Correct data',''.join(red_msge))
+print('bye')

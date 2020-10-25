@@ -7,13 +7,26 @@ struct node{
         char dst;
         int length;
 }obj[10],temp[10],perm[4];
+
 void validate(int c){
 	if(c>3){
 		printf("Enter Valid Input");
 		exit(1);
 	}
 }
-
+struct node sort(node temp[],int max){
+        struct node t[max];
+        for(int i=0;i<max-1;i++){
+                for(int j=i+1;j<max;j++){
+                        if(temp[i].length>temp[j].length){
+                                t=temp[j];
+                                temp[j]=temp[i];
+                                temp[i]=t;
+                        }
+                }
+        }
+        return t;
+}
 
 int main(){
 int matrix[4][4];
@@ -33,9 +46,11 @@ for(int i=0,j=0;i<4;j++,i++) {
       obj[i].length=matrix[c][j];
 }
 perm[0]=obj[0];
+int max;
 for(int i=1;i<10;i++){
 	temp[i]=obj[i];
-
+	max=i;
+   
 }
 
 for(int i=0;i<4;i++){

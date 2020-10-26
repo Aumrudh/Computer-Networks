@@ -8,11 +8,33 @@
 #include<sys/types.h>
 #include<unistd.h>
 
-struct node{
-	char src[5];
-	char dst[5];
-	int length;
-}obj[10],temp[20],perm[4];
+int minimum(int a[],int m[],int k)
+{
+	int min=999;
+	int i,t;
+	for(i=1;i<=k;i++)
+	{
+		if(m[i]!=1)
+		{
+			if(min>a[i])
+			{
+				min=a[i];
+				t=i;
+			}
+		}
+	}
+	return t;
+}
+
+int findprev(int a,int m[],int n)
+{
+	int i;
+	for(i=0;i<n;i++)
+	{
+			if(m[i+1]==a)
+			return m[i];
+	}
+}
 
 int main(){
         int sd,b,l,ad,len;
@@ -26,14 +48,14 @@ int main(){
         server.sin_addr.s_addr=htonl(INADDR_ANY);
 
         //socket creation
-	int matrix[4][4];
+	int mat[20][20];
+	int i,j,n;
+	printf("Enter no.of router : ");
+	scanf("%d",&n);
 	printf("Enter the distance between each rows and columns");
-	for(int i=0;i<4;i++){
-		for(int j=0;j<4;j++){
-			scanf("%d",&matrix[i][j]);
-			obj[j].src=i;
-			obj[j].dst=j;
-			obj[j].length=matrix[i][j];
+	for(int i=0;i<n;i++){
+		for(int j=0;j<n;j++){
+			scanf("%d",&mat[i][j]);
 		}
 
 	}
@@ -81,4 +103,50 @@ int main(){
                 printf("Accepted\n");
         }
         printf("Connection established\n");
-
+        recv(ad,msg,100,0);
+	int src=atoi(msg);
+        printf("Client side : %s\n",msg);
+        	int u,mark[20],hop[20],min[20],cost[20];
+	int cnt,k=0,p;
+	//printf("\nEnter source vertex..");
+	//scanf("%d",&src);
+	for(j=1;j<=n;j++){
+		mark[j]=0;
+		cost[j]=999;
+		hop[j]=-1;
+	}
+	cost[src]=0;
+	hop[src]=0;
+	printf("\nRouting table for %d",src);
+	cnt=1;
+	while(cnt<n){
+		u=minimum(cost,mark,n);
+		min[k++]=u;
+		mark[u]=1;
+		cnt++;
+		for(i=1;i<=n;i++){
+				if(mat[u][i]>0){
+					if(cost[i]>cost[u]+mat[u][i]){
+						cost[i]=cost[u]+mat[u][i];
+						if(mat[src][u]!=0 && mat[src][u]!=-1)
+							hop[i]=u;
+						else if(src==u)
+							hop[i]=i;
+						else{
+							while(hop[i]==-1){
+								p=findprev(u,min,k);
+								if(mat[src][p]!=0 && mat[src][p]!=-1)
+										hop[i]=p;
+							}
+						}
+					}
+				}
+		}
+	}
+	for(i=1;i<=n;i++)
+		printf("%d\t%d\t%d\n",i,hop[i],cost[i]);
+	sprintf(msg,"%d",n);
+	send(ad,msg,100,0);
+	send(ad,hop,20,0);
+	send(ad,cost,20,0);
+}

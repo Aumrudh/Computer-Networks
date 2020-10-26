@@ -95,9 +95,9 @@ int main(){
         scanf("%d",&portno);
         server.sin_port=htons(portno);
         server.sin_addr.s_addr=htonl(INADDR_ANY);
-
+	int n=5;
         //socket creation
-	int mat[4][4]={{0, 2, 3, 99},{ 2, 0, 99 ,1},{ 3, 99 ,0 ,4},{ 99, 1 ,4, 0}};
+	int mat[4][4]	={{0, 2, 3, 99},{ 2, 0, 99 ,1},{ 3, 99 ,0 ,4},{ 99, 1 ,4, 0}};
         /*for(int i=1;i<=4;i++)
 	{
 		printf("\n");
@@ -105,7 +105,7 @@ int main(){
 			printf("%d\t",mat[i][j]);
 		printf("\n");
 	}*/
-	int i,j,n;
+	int i,j;
 	/*printf("Enter no.of router : ");
 	scanf("%d",&n);
 	for(int i=0;i<n;i++){
@@ -162,7 +162,6 @@ int main(){
 	int src=atoi(msg);
         printf("Client side : %s\n",msg);
 	//djikstra(mat,4,1);
-	n=4;
 	for(i=0;i<n;i++)
 	{
 		printf("\n");
@@ -174,7 +173,7 @@ int main(){
         int cnt,k=0,p;
         printf("\nEnter source vertex..");
         scanf("%d",&src);
-        for(j=1;j<=n;j++)
+        for(j=0;j<n;j++)
         {
                 mark[j]=0;
                 me[j]=999;
@@ -190,7 +189,7 @@ int main(){
                 min[k++]=u;
                 mark[u]=1;
                 cnt++;
-                for(i=1;i<=n;i++)
+                for(i=0;i<n;i++)
                 {
                                 if(mat[u][i]>0)
                                 {
@@ -215,7 +214,7 @@ int main(){
                 }
         }	
 	
-	for(i=1;i<=n;i++)
+	for(i=0;i<n;i++)
 		printf("%d\t%d\t%d\n",i,hop[i],me[i]);
 	/*sprintf(msg,"%d",n);
 	send(ad,msg,100,0);

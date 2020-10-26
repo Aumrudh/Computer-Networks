@@ -36,6 +36,55 @@ int findprev(int a,int m[],int n)
 	}
 }
 
+void djikstra(int mat[4][4],int n,int src)
+{
+        int i,j,u,mark[20],hop[20],min[20],me[20];
+        int cnt,k=0,p;
+        for(j=1;j<=n;j++)
+        {
+                mark[j]=0;
+                me[j]=999;
+                hop[j]=-1;
+        }
+        me[src]=0;
+        hop[src]=0;
+        printf("\nRouting table for %d",src);
+        cnt=1;
+        while(cnt<n)
+        {
+                u=minimum(me,mark,n);
+                min[k++]=u;
+                mark[u]=1;
+                cnt++;
+                for(i=1;i<=n;i++)
+                {
+                                if(mat[u][i]>0)
+                                {
+                                        if(me[i]>me[u]+mat[u][i])
+                                        {
+                                                me[i]=me[u]+mat[u][i];
+                                                if(mat[src][u]!=0 && mat[src][u]!=-1)
+                                                        hop[i]=u;
+                                                else if(src==u)
+                                                        hop[i]=i;
+                                                else
+                                                {
+                                                        while(hop[i]==-1)
+                                                        {
+                                                                p=findprev(u,min,k);
+                                                                if(mat[src][p]!=0 && mat[src][p]!=-1)
+                                                                                hop[i]=p;
+                                                        }
+                                                }
+                                        }
+                                }
+                }
+        }
+        printf("\nDEST\tNEXTHOP\tMETRIC\n");
+        for(i=1;i<=n;i++)
+                printf("%d\t%d\t%d\n",i,hop[i],me[i]);
+}
+
 int main(){
         int sd,b,l,ad,len;
         char msg[100];
@@ -48,17 +97,23 @@ int main(){
         server.sin_addr.s_addr=htonl(INADDR_ANY);
 
         //socket creation
-	int mat[20][20];
+	int mat[4][4]={{0, 2, 3, 99},{ 2, 0, 99 ,1},{ 3, 99 ,0 ,4},{ 99, 1 ,4, 0}};
+        /*for(int i=1;i<=4;i++)
+	{
+		printf("\n");
+		for(int j=1;j<=4;j++)
+			printf("%d\t",mat[i][j]);
+		printf("\n");
+	}*/
 	int i,j,n;
-	printf("Enter no.of router : ");
+	/*printf("Enter no.of router : ");
 	scanf("%d",&n);
-	printf("Enter the distance between each rows and columns");
 	for(int i=0;i<n;i++){
 		for(int j=0;j<n;j++){
 			scanf("%d",&mat[i][j]);
 		}
 
-	}
+	}*/
         sd=socket(AF_INET,SOCK_STREAM,0);
         if(sd==-1){
                 printf("Socker=t creation failed\n");
@@ -106,47 +161,64 @@ int main(){
         recv(ad,msg,100,0);
 	int src=atoi(msg);
         printf("Client side : %s\n",msg);
-        	int u,mark[20],hop[20],min[20],cost[20];
-	int cnt,k=0,p;
-	//printf("\nEnter source vertex..");
-	//scanf("%d",&src);
-	for(j=1;j<=n;j++){
-		mark[j]=0;
-		cost[j]=999;
-		hop[j]=-1;
-	}
-	cost[src]=0;
-	hop[src]=0;
-	printf("\nRouting table for %d",src);
-	cnt=1;
-	while(cnt<n){
-		u=minimum(cost,mark,n);
-		min[k++]=u;
-		mark[u]=1;
-		cnt++;
-		for(i=1;i<=n;i++){
-				if(mat[u][i]>0){
-					if(cost[i]>cost[u]+mat[u][i]){
-						cost[i]=cost[u]+mat[u][i];
-						if(mat[src][u]!=0 && mat[src][u]!=-1)
-							hop[i]=u;
-						else if(src==u)
-							hop[i]=i;
-						else{
-							while(hop[i]==-1){
-								p=findprev(u,min,k);
-								if(mat[src][p]!=0 && mat[src][p]!=-1)
-										hop[i]=p;
-							}
-						}
-					}
-				}
-		}
-	}
+	//djikstra(mat,4,1);
+	n=4;
+	for(i=0;i<n;i++)
+	{
+		printf("\n");
+		for(j=0;j<n;j++)
+			printf("%d\t",mat[i][j]);
+		printf("\n");
+	}		
+	int u,mark[20],hop[20],min[20],me[20];
+        int cnt,k=0,p;
+        printf("\nEnter source vertex..");
+        scanf("%d",&src);
+        for(j=1;j<=n;j++)
+        {
+                mark[j]=0;
+                me[j]=999;
+                hop[j]=-1;
+        }
+        me[src]=0;
+        hop[src]=0;
+        printf("Routing table for : %d\n",src);
+        cnt=1;
+        while(cnt<n)
+        {
+                u=minimum(me,mark,n);
+                min[k++]=u;
+                mark[u]=1;
+                cnt++;
+                for(i=1;i<=n;i++)
+                {
+                                if(mat[u][i]>0)
+                                {
+                                        if(me[i]>me[u]+mat[u][i])
+                                        {
+                                                me[i]=me[u]+mat[u][i];
+                                                if(mat[src][u]!=0 && mat[src][u]!=-1)
+                                                        hop[i]=u;
+                                                else if(src==u)
+                                                        hop[i]=i;
+                                                else
+                                                {
+                                                        while(hop[i]==-1)
+                                                        {
+                                                                p=findprev(u,min,k);
+                                                                if(mat[src][p]!=0 && mat[src][p]!=-1)
+                                                                                hop[i]=p;
+                                                        }
+                                                }
+                                        }
+                                }
+                }
+        }	
+	
 	for(i=1;i<=n;i++)
-		printf("%d\t%d\t%d\n",i,hop[i],cost[i]);
-	sprintf(msg,"%d",n);
+		printf("%d\t%d\t%d\n",i,hop[i],me[i]);
+	/*sprintf(msg,"%d",n);
 	send(ad,msg,100,0);
 	send(ad,hop,20,0);
-	send(ad,cost,20,0);
+	send(ad,me,20,0);*/
 }

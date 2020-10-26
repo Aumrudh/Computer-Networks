@@ -193,8 +193,8 @@ int main(){
 	printf("\nDEST\tNEXTHOP\tMETRIC\n");	
 	for(i=1;i<=n;i++)
 		printf("%d\t%d\t%d\n",i,hop[i],me[i]);
-	/*sprintf(msg,"%d",n);
+	sprintf(msg,"%d",n);
 	send(ad,msg,100,0);
 	send(ad,hop,20,0);
-	send(ad,me,20,0);*/
+	send(ad,me,20,0);
 }

@@ -46,12 +46,10 @@ int main(){
         send(sd,msg,100,0);
         recv(sd,msg,100,0);
 	int n=atoi(msg);
-	char hop[100],cost[100];
-	recv(sd,msg,100,0);
-	strcpy(hop,msg);
-	recv(sd,msg,100,0);
-	strcpy(cost,msg);
-	for(int i=1;i<n;i++){
+	int hop[20],cost[20];
+	recv(sd,hop,20,0);
+	recv(sd,cost,20,0);
+	for(int i=1;i<=n;i++){
 		printf("%d\t%d\t%d\n",i,hop[i],cost[i]);
 	}
         close(sd);

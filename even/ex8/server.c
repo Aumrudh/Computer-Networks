@@ -31,26 +31,26 @@ int findprev(int a, int m[], int n) {
 }
 
 void djikstra(int mat[4][4], int n, int src) {
-  int i, j, u, mark[20], hop[20], min[20], me[20];
+  int i, j, u, mark[20], hop[20], min[20], cost[20];
   int cnt, k = 0, p;
   for (j = 1; j <= n; j++) {
     mark[j] = 0;
-    me[j] = 999;
+    cost[j] = 999;
     hop[j] = -1;
   }
-  me[src] = 0;
+  cost[src] = 0;
   hop[src] = 0;
   printf("\nRouting table for %d", src);
   cnt = 1;
   while (cnt < n) {
-    u = minimum(me, mark, n);
+    u = minimum(cost, mark, n);
     min[k++] = u;
     mark[u] = 1;
     cnt++;
     for (i = 1; i <= n; i++) {
       if (mat[u][i] > 0) {
-        if (me[i] > me[u] + mat[u][i]) {
-          me[i] = me[u] + mat[u][i];
+        if (cost[i] > cost[u] + mat[u][i]) {
+          cost[i] = cost[u] + mat[u][i];
           if (mat[src][u] != 0 && mat[src][u] != -1)
             hop[i] = u;
           else if (src == u)
@@ -68,7 +68,7 @@ void djikstra(int mat[4][4], int n, int src) {
   }
   printf("\nDEST\tNEXTHOP\tMETRIC\n");
   for (i = 1; i <= n; i++)
-    printf("%d\t%d\t%d\n", i, hop[i], me[i]);
+    printf("%d\t%d\t%d\n", i, hop[i], cost[i]);
 }
 
 int main() {
@@ -136,26 +136,26 @@ int main() {
   int src = atoi(msg);
   printf("Client side : %s\n", msg);
   // djikstra(mat,4,1);
-  int u, mark[20], hop[20], min[20], me[20];
+  int u, mark[20], hop[20], min[20], cost[20];
   int cnt, k = 0, p;
   for (j = 0; j < n; j++) {
     mark[j] = 0;
-    me[j] = 999;
+    cost[j] = 999;
     hop[j] = -1;
   }
-  me[src] = 0;
+  cost[src] = 0;
   hop[src] = 0;
   printf("Routing table for : %d\n", src);
   cnt = 1;
   while (cnt < n) {
-    u = minimum(me, mark, n);
+    u = minimum(cost, mark, n);
     min[k++] = u;
     mark[u] = 1;
     cnt++;
     for (i = 1; i <= n; i++) {
       if (mat[u][i] > 0) {
-        if (me[i] > me[u] + mat[u][i]) {
-          me[i] = me[u] + mat[u][i];
+        if (cost[i] > cost[u] + mat[u][i]) {
+          cost[i] = cost[u] + mat[u][i];
           if (mat[src][u] != 0 && mat[src][u] != -1)
             hop[i] = u;
           else if (src == u)
@@ -173,9 +173,9 @@ int main() {
   }
   printf("\nDEST\tNEXTHOP\tMETRIC\n");
   for (i = 1; i <= n; i++)
-    printf("%d\t%d\t%d\n", i, hop[i], me[i]);
+    printf("%d\t%d\t%d\n", i, hop[i], cost[i]);
   sprintf(msg, "%d", n);
   send(ad, msg, 100, 0);
   send(ad, hop, 20, 0);
-  send(ad, me, 20, 0);
+  send(ad, cost, 20, 0);
 }

@@ -71,7 +71,7 @@ int main(){
 		system("arp.exe -a > arp_file.txt");
 		FILE *f=fopen("arp_file","r");
 		char temp[2000];
-		fgets(temp,2000,f);
+		//fgets(temp,2000,f);
 		int flag=0;
 		char ip[100],mac[100],type[100],found[100];
 		while(!feof(f)){

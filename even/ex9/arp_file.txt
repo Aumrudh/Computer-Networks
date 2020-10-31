@@ -8,10 +8,10 @@ Interface: 169.254.135.186 --- 0x5
   239.255.255.250       01-00-5e-7f-ff-fa     static    
   255.255.255.255       ff-ff-ff-ff-ff-ff     static    
 
-Interface: 192.168.0.33 --- 0x7
+Interface: 192.168.29.39 --- 0x7
   Internet Address      Physical Address      Type
-  192.168.0.1           5c-1a-6f-ca-95-d0     dynamic   
-  192.168.0.255         ff-ff-ff-ff-ff-ff     static    
+  192.168.29.1          c4-95-4d-3b-f3-fd     dynamic   
+  192.168.29.255        ff-ff-ff-ff-ff-ff     static    
   224.0.0.22            01-00-5e-00-00-16     static    
   224.0.0.251           01-00-5e-00-00-fb     static    
   224.0.0.252           01-00-5e-00-00-fc     static    

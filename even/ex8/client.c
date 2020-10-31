@@ -42,15 +42,16 @@ int main() {
   printf("Enter client message : ");
   scanf("%s", msg);
   send(sd, msg, 100, 0);
-  //recv(sd, msg, 100, 0);
-  //int n = atoi(msg);
-  //printf("n= %d\n",n);
+  recv(sd, msg, 100, 0);
+  int n = atoi(msg);
+  printf("n= %d\n",n);
   int hope[25], coste[25];
   if( recv(sd, hope, 20, 0) < 0) {
     printf("Error");
   }
   recv(sd, coste,20, 0);
-  for (int i = 0; i <5; i++) {
+  printf("\nDEST\tNEXTHOP\tCOST\n");
+  for (int i = 0; i <n; i++) {
     printf("%d\t%d\t%d\n", i+1, hope[i], coste[i]);
   }
   close(sd);

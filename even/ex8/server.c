@@ -46,6 +46,7 @@ int main() {
   int i, j;
   printf("Enter no.of router : ");
   scanf("%d", &n);
+  printf("Enter the matrix : \n");
   for (int i = 1; i <= n; i++) {
     for (int j = 1; j <= n; j++) {
       scanf("%d", &mat[i][j]);
@@ -137,10 +138,8 @@ int main() {
 	h[i-1]=hop[i];
 	co[i-1]=cost[i];
   }
-	hop[n+1]=0;
-	cost[n+1]=0;
-  //sprintf(msg, "%d", n);
-  //send(ad, msg, 100, 0);
+  sprintf(msg, "%d", n);
+  send(ad, msg, 100, 0);
   send(ad, h, 20, 0);
   send(ad,co, 20, 0);
   close(ad);

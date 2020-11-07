@@ -69,7 +69,7 @@ int main(){
                 recv(ad,msg,100,0);
                 printf("Client side : %s\n",msg);
 		system("arp.exe -a > arp_file.txt");
-		FILE *f=fopen("arp_file","r");
+		FILE *f=fopen("arp_file.txt","r");
 		char temp[2000];
 		//fgets(temp,2000,f);
 		int flag=0;

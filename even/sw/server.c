@@ -8,7 +8,6 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include<time.h>
-#define cls() printf("\n")
 
 // structure definition for designing the packet.
 
@@ -55,7 +54,7 @@ int main()
 
   serveraddr.sin_family = AF_INET;
 
-  serveraddr.sin_port = htons(5018);
+  serveraddr.sin_port = htons(2519);
 
   serveraddr.sin_addr.s_addr = INADDR_ANY;
 
@@ -67,33 +66,27 @@ int main()
 
   // connection establishment.
 
-  printf("\nWaiting for client connection.\n");
+  printf("\nServer side \n");
 
   recvfrom(serversocket, req, sizeof(req), 0, (struct sockaddr *)&clientaddr,
            &len);
 
-  printf("\nThe client connection obtained.\t%s\n", req);
+  //printf("\nThe client connection obtained.\t%s\n", req);
 
   // sending request for windowsize.
 
-  printf("\nSending request for window size.\n");
+  //printf("\nSending request for window size.\n");
 
-  sendto(serversocket, "REQUEST FOR WINDOWSIZE.",
-         sizeof("REQUEST FOR WINDOWSIZE."), 0, (struct sockaddr *)&clientaddr,
-         sizeof(clientaddr));
+  sendto(serversocket, "enter window size",sizeof("enter window size"), 0, (struct sockaddr *)&clientaddr,sizeof(clientaddr));
 
   // obtaining windowsize.
 
-  printf("\nWaiting for the windowsize.\n");
+ // printf("\nWaiting for the windowsize.\n");
 
-  recvfrom(serversocket, (char *)&windowsize, sizeof(windowsize), 0,
-           (struct sockaddr *)&clientaddr, &len);
+  recvfrom(serversocket, (char *)&windowsize, sizeof(windowsize), 0, (struct sockaddr *)&clientaddr, &len);
 
-  cls();
 
   printf("\nThe windowsize obtained as:\t%d\n", windowsize);
-
-  printf("\nObtaining packets from network layer.\n");
 
   printf("\nTotal packets obtained:\t%d\n", (totalpackets = windowsize * 5));
 
@@ -118,11 +111,6 @@ int main()
   recvfrom(serversocket, req, sizeof(req), 0, (struct sockaddr *)&clientaddr,
            &len);
 
-  //printf("\nPRESS ENTER TO START THE PROCESS.\n");
-
-  //fgets(req, 2, stdin);
-
-  cls();
 
   j = 0;
 
@@ -157,7 +145,7 @@ int main()
 
     {
 
-      printf("\nassigning vlaue to pakcet : %d  ", i);
+      printf(" %d  ", i);
 
       f1.packet[j] = i;
 
@@ -184,7 +172,6 @@ label:  //printf("\nSending frame %d\n", framessend);
 	    sleep(10);
     }
     end = time(NULL);
-    cls();
 
     // Checking acknowledgement of each packet.
 
@@ -244,11 +231,6 @@ label:  //printf("\nSending frame %d\n", framessend);
 
     framessend++;
 
-    //printf("\nPRESS ENTER TO PROCEED……\n");
-
-    //fgets(req, 2, stdin);
-
-    cls();
   }
 
   printf("\nAll frames send successfully.\n\nClosing connection with the "

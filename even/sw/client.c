@@ -9,7 +9,6 @@
 #include <sys/types.h>
 #include <time.h>
 #include <unistd.h>
-#define cls() printf("\n")
 
 // structure definition for accepting the packets.
 
@@ -61,7 +60,7 @@ int main()
 
   serveraddr.sin_family = AF_INET;
 
-  serveraddr.sin_port = htons(5018);
+  serveraddr.sin_port = htons(2519);
 
   server = gethostbyname("127.0.0.1");
 
@@ -75,12 +74,12 @@ int main()
   sendto(clientsocket, "HI I AM CLIENT.", sizeof("HI I AM CLIENT."), 0,
          (struct sockaddr *)&serveraddr, sizeof(serveraddr));
 
-  printf("\nWaiting for reply.\n");
+  //printf("\nWaiting for reply.\n");
 
   recvfrom(clientsocket, req, sizeof(req), 0, (struct sockaddr *)&serveraddr,
            &len);
 
-  printf("\nThe server has send:\t%s\n", req);
+  //printf("\nThe server has send:\t%s\n", req);
 
   // accepting window size from the user.
 
@@ -95,11 +94,10 @@ int main()
   sendto(clientsocket, (char *)&windowsize, sizeof(windowsize), 0,
          (struct sockaddr *)&serveraddr, sizeof(serveraddr));
 
-  cls();
 
   // collecting details from server.
 
-  printf("\nWaiting for the server response.\n");
+  //printf("\nWaiting for the server response.\n");
 
   recvfrom(clientsocket, (char *)&totalpackets, sizeof(totalpackets), 0,
            (struct sockaddr *)&serveraddr, &len);
@@ -112,14 +110,14 @@ int main()
   recvfrom(clientsocket, (char *)&totalframes, sizeof(totalframes), 0,
            (struct sockaddr *)&serveraddr, &len);
 
-  printf("\nThe total frames/windows are:\t%d\n", totalframes);
+  //printf("\nThe total frames/windows are:\t%d\n", totalframes);
 
   sendto(clientsocket, "RECEIVED.", sizeof("RECEIVED."), 0,
          (struct sockaddr *)&serveraddr, sizeof(serveraddr));
 
   // starting the process.
 
-  printf("\nStarting the process of receiving.\n");
+  //printf("\nStarting the process of receiving.\n");
 
   j = 0;
 
@@ -129,7 +127,7 @@ int main()
 
   { // initialising the receive buffer.
 
-    printf("\nInitialising the receive buffer.\n");
+    //printf("\nInitialising the receive buffer.\n");
 
     printf("\nThe expected frame is %d with packets:  ", framesreceived);
 
@@ -151,7 +149,7 @@ int main()
       j++;
     }
 
-    printf("\n\nWaiting for the frame.\n");
+    //printf("\n\nWaiting for the frame.\n");
 
     // accepting the frame.
 
@@ -159,13 +157,13 @@ int main()
     recvfrom(clientsocket, (char *)&f1, sizeof(f1), 0,
              (struct sockaddr *)&serveraddr, &len);
 
-    printf("\nReceived frame %d\n\nEnter -1 to send negative acknowledgement "
-           "for the following packets.\n",
-           framesreceived);
+    //printf("\nReceived frame %d\n\nEnter -1 to send negative acknowledgement "
+     //      "for the following packets.\n",
+     //      framesreceived);
 
     // constructing the acknowledgement frame.
 
-     printf("1-no ack(after 10 sec type )\n2-ack..enter choice : ");
+     printf("\n1-no ack\n2-ack ..enter choice : ");
      int choice;
      scanf("%d",&choice);
      if( choice == 1 ){
@@ -183,6 +181,7 @@ int main()
              sizeof(serveraddr));
       goto label;
       }
+      printf("\nReceived frame %d\n\nEnter -1 to send negative acknowledgement for the following packets.\n",framesreceived);
 
       j = 0;
 
@@ -244,7 +243,6 @@ int main()
       sendto(clientsocket, (char *)&acknowledgement, sizeof(acknowledgement), 0,
              (struct sockaddr *)&serveraddr, sizeof(serveraddr));
 
-      cls();
     }
 
     printf("\nAll frames received successfully.\n\nClosing connection with the "

@@ -244,7 +244,6 @@ label:  recvfrom(clientsocket, (char *)&f1, sizeof(f1), 0,
     sendto(clientsocket, (char *)&acknowledgement, sizeof(acknowledgement), 0,
            (struct sockaddr *)&serveraddr, sizeof(serveraddr));
 
-    cls();
   }
 
   printf("\nAll frames received successfully.\n\nClosing connection with the "

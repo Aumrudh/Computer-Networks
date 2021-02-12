@@ -4,7 +4,7 @@ routing  --- linkstate routing
 
 arp --- proc/net/arp
 
-for linux -- arp -n -e
+for linux -- arp -ne
 for wsl --- arp.exe -a
 
 ftp---- use tcp =--

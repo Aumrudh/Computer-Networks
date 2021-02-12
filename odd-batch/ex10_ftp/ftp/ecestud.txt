@@ -1,0 +1,4 @@
+Rollno		Name		M1  M2  M3  M4  M5
+18bec051	Sankar		90  91  92  99 	93
+18bec052	Vinoth		92  92  93  94  95
+18bec053	Karan		99  98  97  95  92	

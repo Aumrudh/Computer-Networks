@@ -1,0 +1,9 @@
+ID		Password
+FACIT01         abc01
+FACIT02		def02
+FACEC01		ecab01
+FACEC02		eccd02
+18bec051        qwerty@051
+18bit051	sankar@48
+18bec052	sdf@12
+18bit052	ghi123

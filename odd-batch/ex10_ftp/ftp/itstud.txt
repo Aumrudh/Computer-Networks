@@ -1,0 +1,4 @@
+Rollno		Name		M1  M2  M3  M4  M5
+18bit051	Sankar		90  91  92  99 	93
+18bit052	Arjun		92  92  93  94  95
+18bit053	Arun		99  98  97  95  92	

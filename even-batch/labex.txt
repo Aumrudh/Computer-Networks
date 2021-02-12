@@ -1,0 +1,16 @@
+sw --- selective repeat
+
+routing  --- linkstate routing
+
+arp --- proc/net/arp
+
+for linux -- arp -n -e
+for wsl --- arp.exe -a
+
+ftp---- use tcp =--
+office server simultaiton
+
+
+dns --- use udp
+gethostbyaddr
+getservbyname
